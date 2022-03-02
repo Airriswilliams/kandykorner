@@ -6,6 +6,7 @@ export const LocationList = () => {
   // that modifies our state "setLocations" is the function
   const [locations, setLocations] = useState([]);
   // "hook" useEffect takes 2 arguments a function and an array
+  // useEffect hook gets the array of locations from my API
   // useEffect is to run code when certain state changes i.e. event listener
   useEffect(() => {
     fetch("http://localhost:8088/locations")
@@ -21,7 +22,7 @@ export const LocationList = () => {
     <>
       {locations.map((locationObject) => {
         return (
-          <p key={`location--${locationObject.id}`}>{locationObject.name}</p>
+          <p key={`location--${locationObject.id}`}>{locationObject.address}</p>
         );
       })}
     </>
