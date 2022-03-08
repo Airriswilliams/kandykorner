@@ -18,7 +18,7 @@ export const EmployeeList = () => {
       });
   }, []);
 
-  useEffect(() => {}, [employees]);
+  // useEffect(() => {}, [employees]);
 
   return (
     <>
@@ -30,10 +30,11 @@ export const EmployeeList = () => {
 
       {employees.map((employeeObject) => {
         return (
-          <p key={`employee--${employeeObject.id}`}>
+          <div key={`employee--${employeeObject.id}`}>
             {employeeObject.name}
-            <span></span> {employeeObject.location.address}
-          </p>
+            <br /> {employeeObject.location.address}
+            <hr />
+          </div>
         );
       })}
     </>
