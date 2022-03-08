@@ -7,6 +7,7 @@ import { LocationList } from "./locations/LocationsList";
 import { EmployeeList } from "./employees/EmployeeList";
 import { EmployeeForm } from "./employees/EmployeeForm";
 import { CustomerList } from "./customers/CustomerList";
+import { OrderList } from "./orders/Orders";
 
 // purpose of this component is to render the individual pages that were selected by navBar
 // links, click on the links and the following gets triggered.
@@ -34,6 +35,10 @@ export const ApplicationViews = () => {
 
       <Route path="/employees/create">
         <EmployeeForm />
+      </Route>
+
+      <Route exact path="/orders">
+        <OrderList />
       </Route>
     </>
   );

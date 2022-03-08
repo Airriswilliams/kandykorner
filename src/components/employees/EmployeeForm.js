@@ -4,7 +4,7 @@ import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 export const EmployeeForm = () => {
   const [employee, updateEmployee] = useState({
     name: "",
-    locationId: 1,
+    locationId: parseInt(employee.locationId),
     manager: false,
     full_time: true,
     hourly_rate: "",
