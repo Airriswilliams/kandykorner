@@ -6,6 +6,7 @@ export const EmployeeList = () => {
   // it returns an initial value "products" & it returns a function
   // that modifies our state "setProducts" is the function
   const [employees, setEmployees] = useState([]);
+  const [firedEmployee, updateEmployeeList] = useState([]);
   const history = useHistory();
   // "hook" useEffect takes 2 arguments a function and an array
   // useEffect hook gets the array of employees from my API
@@ -16,7 +17,15 @@ export const EmployeeList = () => {
       .then((data) => {
         setEmployees(data);
       });
-  }, []);
+  }, [firedEmployee]);
+
+  const deleteEmployee = (id) => {
+    fetch(`http://localhost:8088/employees/${id}`, {
+      method: "DELETE",
+    }).then(() => {
+      updateEmployeeList([1]);
+    });
+  };
 
   // useEffect(() => {}, [employees]);
 
@@ -34,6 +43,13 @@ export const EmployeeList = () => {
             {employeeObject.name}
             <br /> {employeeObject.location.address}
             <hr />
+            <button
+              onClick={() => {
+                deleteEmployee(employeeObject.id);
+              }}
+            >
+              Fire Employee
+            </button>
           </div>
         );
       })}
