@@ -1,20 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router-dom";
+import { getAllOrders } from "../ApiManager";
 
 export const OrderList = () => {
   const [orders, setOrders] = useState([]);
   const history = useHistory();
 
   useEffect(() => {
-    fetch(
-      `http://localhost:8088/purchases?_expand=product&customerId=${localStorage.getItem(
-        "kandy_customer"
-      )}`
-    )
-      .then((res) => res.json())
-      .then((data) => {
-        setOrders(data);
-      });
+    getAllOrders().then((purchasesArray) => {
+      setOrders(purchasesArray);
+    });
   }, []);
 
   return (

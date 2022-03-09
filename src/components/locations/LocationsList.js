@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getAllLocations } from "../ApiManager";
 
 export const LocationList = () => {
   // define state, when you invoke useState it returns an array
@@ -9,11 +10,10 @@ export const LocationList = () => {
   // useEffect hook gets the array of locations from my API
   // useEffect is to run code when certain state changes i.e. event listener
   useEffect(() => {
-    fetch("http://localhost:8088/locations")
-      .then((res) => res.json())
-      .then((data) => {
-        setLocations(data);
-      });
+    console.log("Initial useEffect");
+    getAllLocations().then((locationArray) => {
+      setLocations(locationArray);
+    });
   }, []);
 
   useEffect(() => {}, [locations]);

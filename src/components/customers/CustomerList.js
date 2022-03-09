@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { getAllCustomers, getAllOrders } from "../ApiManager";
 // function purpose is to render a string of how many customers we have
 // and strings of each customer name
 
@@ -7,26 +8,52 @@ export const CustomerList = () => {
   // it returns an initial value "customers" & it returns a function
   // that modifies our state "setCustomers" is the function
   // useState capturing and storing new state specifically for customers in the CustomerList function
-  const [customers, setCustomers] = useState([]);
+  const [customers, setCustomer] = useState([]);
+  const [purchases, updatePurchases] = useState([]);
   // "hook" useEffect takes 2 arguments a function and an array
   // useEffect is to run code when certain state changes i.e. event listener
   useEffect(() => {
-    fetch("http://localhost:8088/customers")
-      // fetch gets json from database.json and turns that response into JavaScript using this JS method.
-      .then((res) => res.json())
+    getAllCustomers()
+      .then(setCustomer)
+      .then(getAllOrders)
       .then((data) => {
-        setCustomers(data);
+        updatePurchases(data);
       });
   }, []);
-  // ASK ABOUT LINE 20????
-  useEffect(() => {}, [customers]);
+
+  useEffect(() => {
+    const totalPurchases = customers.map((customer) => {
+      customer.numberOfPurchases = purchases.filter(
+        (purchase) => customer.id === purchase.customerId
+      ).length;
+      return customer;
+    });
+
+    totalPurchases.sort((a, b) => {
+      return b.numberOfPurchases - a.numberOfPurchases;
+    });
+
+    setCustomer(totalPurchases);
+  }, [purchases]);
 
   return (
     <>
+      <h2>Kandy Customer</h2>
       {/* for each customerObject in the customers array it will be returned as JSX */}
-      {customers.map((customerObject) => {
+      {/* first map through customers array then filter out each purchase made by customer */}
+
+      {customers.map((customer) => {
         return (
-          <p key={`customer--${customerObject.id}`}>{customerObject.name}</p>
+          <p key={`customer--${customer.id}`}>
+            {customer.name}
+
+            {/* check to see of customer.id === customerId in purchases array, if it does return then return the length in purchases. */}
+            {
+              purchases.filter(
+                (purchase) => customer.id === purchase.customerId
+              ).length
+            }
+          </p>
         );
       })}
     </>
